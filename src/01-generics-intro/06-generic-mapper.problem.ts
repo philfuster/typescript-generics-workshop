@@ -1,7 +1,12 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
-
-export const concatenateFirstNameAndLastName = (user: unknown) => {
+interface User {
+  firstName: string;
+  lastName: string;
+}
+export const concatenateFirstNameAndLastName = <TUser extends User>(
+  user: TUser
+) => {
   return {
     ...user,
     fullName: `${user.firstName} ${user.lastName}`,
@@ -79,6 +84,6 @@ it("Should fail when the object passed in does not contain firstName", () => {
 
   const newUsers = users.map(
     // @ts-expect-error
-    concatenateFirstNameAndLastName,
+    concatenateFirstNameAndLastName
   );
 });
