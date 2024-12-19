@@ -2,11 +2,11 @@ import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
 const createClassNamesFactory =
-  (classes: unknown) =>
-  (type: unknown, ...otherClasses: unknown[]) => {
-    const classList = [classes[type], ...otherClasses];
-    return classList.join(" ");
-  };
+  <TClasses extends Record<string, string>>(classes: TClasses) =>
+    <TType extends keyof TClasses>(type: TType, ...otherClasses: string[]) => {
+      const classList = [classes[type], ...otherClasses];
+      return classList.join(" ");
+    };
 
 const getBg = createClassNamesFactory({
   primary: "bg-blue-500",

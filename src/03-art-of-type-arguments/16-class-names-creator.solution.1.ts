@@ -3,10 +3,10 @@ import { Equal, Expect } from "../helpers/type-utils";
 
 const createClassNamesFactory =
   <TVariant extends string>(classes: Record<TVariant, string>) =>
-  (type: TVariant, ...otherClasses: string[]) => {
-    const classList = [classes[type], ...otherClasses];
-    return classList.join(" ");
-  };
+    (type: TVariant, ...otherClasses: string[]) => {
+      const classList = [classes[type], ...otherClasses];
+      return classList.join(" ");
+    };
 
 const getBg = createClassNamesFactory({
   primary: "bg-blue-500",
