@@ -1,20 +1,17 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
-const returnBothOfWhatIPassIn = <T1, T2>(params: {
-  a: T1;
-  b: T2;
-}): [T1, T2] => {
+const returnBothOfWhatIPassIn = <TProps extends { a: unknown, b: unknown }>(params: TProps): [TProps['a'], TProps['b']] => {
   return [params.a, params.b];
 };
 
 it("Should return a tuple of the properties a and b", () => {
   const result = returnBothOfWhatIPassIn({
-    a: "a",
-    b: 1,
+    a: 1,
+    b: 'a',
   });
 
-  expect(result).toEqual(["a", 1]);
+  expect(result).toEqual([1, 'a']);
 
-  type test1 = Expect<Equal<typeof result, [string, number]>>;
+  type test1 = Expect<Equal<typeof result, [number, string]>>;
 });
