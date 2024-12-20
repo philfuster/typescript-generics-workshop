@@ -15,7 +15,8 @@ interface AdminPrivileges extends UserPrivileges {
 
 function getRolePrivileges(role: "admin"): AdminPrivileges;
 function getRolePrivileges(role: "user"): UserPrivileges;
-function getRolePrivileges(role: string): AnonymousPrivileges {
+function getRolePrivileges(role: string): AnonymousPrivileges;
+function getRolePrivileges(role: string): AnonymousPrivileges | UserPrivileges | AdminPrivileges {
   switch (role) {
     case "admin":
       return {
@@ -37,7 +38,6 @@ function getRolePrivileges(role: string): AnonymousPrivileges {
 
 it("Should return the correct privileges", () => {
   const adminPrivileges = getRolePrivileges("admin");
-
   const userPrivileges = getRolePrivileges("user");
   const anonymousPrivileges = getRolePrivileges("anonymous");
 
