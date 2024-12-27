@@ -2,17 +2,25 @@ import { it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
 // You'll need to use function overloads to figure this out!
-function useData<T>(params: { fetchData: () => Promise<T>; initialData?: T }): {
+function useData<T>(params: { fetchData: () => Promise<T>; initialData?: T }): { getData: () => T | undefined }
+function useData<T>(params: { fetchData: () => Promise<T>; initialData: T }): { getData: () => T }
+function useData<T>(params: { fetchData: () => Promise<T>; initialData?: T } | { fetchData: () => Promise<T>, initialData: T }): {
   getData: () => T | undefined;
-} {
-  let data = params.initialData;
+} | { getData: () => T } {
+  let data: T | undefined;
 
   params.fetchData().then((d) => {
     data = d;
   });
+  const initialData = params.initialData;
+  if (initialData == null) {
+    return {
+      getData: () => data
+    }
+  }
 
   return {
-    getData: () => data,
+    getData: () => data ?? initialData,
   };
 }
 
